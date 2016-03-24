@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class PlayerInput : MonoBehaviour {
+    private Rigidbody2D rigidbody2d;
+
     public float moveSpeed = 5f;
 
 	// Use this for initialization
@@ -18,4 +20,9 @@ public class PlayerInput : MonoBehaviour {
             transform.Translate(new Vector3(horizontal, 0, 0) * Time.deltaTime * moveSpeed);
         }
 	}
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        
+    }
 }

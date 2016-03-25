@@ -15,14 +15,9 @@ public class PlayerInput : MonoBehaviour {
 	void Update () {
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (horizontal != 0)
+        if (horizontal != 0 && (transform.position.x > -9.9 || horizontal > 0) && (transform.position.x < 9.9 || horizontal < 0))
         {
             transform.Translate(new Vector3(horizontal, 0, 0) * Time.deltaTime * moveSpeed);
         }
 	}
-
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        
-    }
 }

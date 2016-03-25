@@ -8,6 +8,7 @@ TagManager:
   - TopBound
   - BottomBound
   - YBounds
+  - Block
   layers:
   - Default
   - TransparentFX

@@ -23,7 +23,7 @@ public class BallCollision : MonoBehaviour {
         
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         float frac;
         float angle;
@@ -76,6 +76,26 @@ public class BallCollision : MonoBehaviour {
         if (other.gameObject.CompareTag("BottomBound"))
         {
             Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Block"))
+        {
+            collider2d = other.gameObject.GetComponent<BoxCollider2D>();
+
+            if (transform.position.y > (other.transform.position.y - collider2d.size.y + 0.1f) 
+                && transform.position.y < (other.transform.position.y + collider2d.size.y - 0.1f))
+            {
+                rigidbody2d.AddForce(-force);
+                force = new Vector2(-force.x, force.y);
+                rigidbody2d.AddForce(force);
+            } else
+            {
+                rigidbody2d.AddForce(-force);
+                force = new Vector2(force.x, -force.y);
+                rigidbody2d.AddForce(force);
+            }
+
+            Destroy(other.gameObject);
         }
     }
 }

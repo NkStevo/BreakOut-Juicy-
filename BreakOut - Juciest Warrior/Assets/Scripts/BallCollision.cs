@@ -45,9 +45,9 @@ public class BallCollision : MonoBehaviour {
                 force = new Vector2(Mathf.Abs(Mathf.Cos(angle * (Mathf.PI / 180))), Mathf.Abs(Mathf.Sin(angle * (Mathf.PI / 180)))) * moveSpeed;
             }
 
-            Debug.Log(transform.position.x - other.transform.position.x);
+            /*Debug.Log(transform.position.x - other.transform.position.x);
             Debug.Log(frac);
-            Debug.Log(angle);
+            Debug.Log(angle);*/
             
             if ((force / moveSpeed).Equals(new Vector2(1f, 0f)) || (force / moveSpeed).Equals(new Vector2(-1f, 0f)))
             {
@@ -56,7 +56,26 @@ public class BallCollision : MonoBehaviour {
 
             rigidbody2d.AddForce(force);
 
-            Debug.Log(force / moveSpeed);
+            //Debug.Log(force / moveSpeed);
+        }
+
+        if (other.gameObject.CompareTag("YBounds"))
+        {
+            rigidbody2d.AddForce(-force);
+            force = new Vector2(-force.x, force.y);
+            rigidbody2d.AddForce(force);
+        }
+
+        if (other.gameObject.CompareTag("TopBound"))
+        {
+            rigidbody2d.AddForce(-force);
+            force = new Vector2(force.x, -force.y);
+            rigidbody2d.AddForce(force);
+        }
+
+        if (other.gameObject.CompareTag("BottomBound"))
+        {
+            Destroy(gameObject);
         }
     }
 }

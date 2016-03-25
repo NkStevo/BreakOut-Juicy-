@@ -31,13 +31,29 @@ public class BallCollision : MonoBehaviour {
         if (other.gameObject.CompareTag("Player"))
         {
             collider2d = other.gameObject.GetComponent<BoxCollider2D>();
-            frac = (transform.position.x - other.transform.position.x) / (collider2d.size.x / 2f);
-            angle = (1f - frac) * 90;
+            frac = (transform.position.x - other.transform.position.x) / (collider2d.size.x);
+
+            if (frac < 0)
+            {
+                angle = -(1f + frac) * 90;
+                rigidbody2d.AddForce(-force);
+                force = new Vector2(-Mathf.Cos(angle * (Mathf.PI / 180)), Mathf.Abs(Mathf.Sin(angle * (Mathf.PI / 180)))) * moveSpeed;
+            } else
+            {
+                angle = (1f - frac) * 90;
+                rigidbody2d.AddForce(-force);
+                force = new Vector2(Mathf.Abs(Mathf.Cos(angle * (Mathf.PI / 180))), Mathf.Abs(Mathf.Sin(angle * (Mathf.PI / 180)))) * moveSpeed;
+            }
+
+            Debug.Log(transform.position.x - other.transform.position.x);
             Debug.Log(frac);
             Debug.Log(angle);
+            
+            if ((force / moveSpeed).Equals(new Vector2(1f, 0f)) || (force / moveSpeed).Equals(new Vector2(-1f, 0f)))
+            {
+                force = new Vector2((force.x / moveSpeed), 0.1f) * moveSpeed;
+            }
 
-            rigidbody2d.AddForce(-force);
-            force = new Vector2(Mathf.Cos(angle * (Mathf.PI / 180)), (-force.y / moveSpeed)) * moveSpeed;
             rigidbody2d.AddForce(force);
 
             Debug.Log(force / moveSpeed);

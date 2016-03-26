@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 458778}
   - 212: {fileID: 21239944}
   - 61: {fileID: 6147282}
+  - 114: {fileID: 11479764}
   m_Layer: 0
   m_Name: BlockA
   m_TagString: Block
@@ -43,6 +44,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.16}
+--- !u!114 &11479764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6f8103e79a2f444b2451cf8cf68ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockHealth: 2
 --- !u!212 &21239944
 SpriteRenderer:
   m_ObjectHideFlags: 1

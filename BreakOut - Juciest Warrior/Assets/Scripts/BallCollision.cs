@@ -6,16 +6,15 @@ public class BallCollision : MonoBehaviour {
     private Rigidbody2D rigidbody2d;
     private BoxCollider2D collider2d;
     private Vector2 force;
+    private BlockDamage blockDamage;
 
     public float moveSpeed = 500f;
+    public int ballDamage = 2;
 
 	// Use this for initialization
 	void Start () {
         ballNum++;
-        rigidbody2d = GetComponent<Rigidbody2D>();
-        force = Vector2.down * moveSpeed;
-        rigidbody2d.AddForce(force);
-        
+        rigidbody2d = GetComponent<Rigidbody2D>();    
 	}
 	
 	// Update is called once per frame
@@ -28,7 +27,7 @@ public class BallCollision : MonoBehaviour {
         float frac;
         float angle;
 
-        if (other.gameObject.CompareTag("Player"))
+        if (rigidbody2d != null && other.gameObject.CompareTag("Player"))
         {
             collider2d = other.gameObject.GetComponent<BoxCollider2D>();
             frac = (transform.position.x - other.transform.position.x) / (collider2d.size.x);
@@ -75,12 +74,14 @@ public class BallCollision : MonoBehaviour {
 
         if (other.gameObject.CompareTag("BottomBound"))
         {
+            ballNum--;
             Destroy(gameObject);
         }
 
         if (other.gameObject.CompareTag("Block"))
         {
             collider2d = other.gameObject.GetComponent<BoxCollider2D>();
+            blockDamage = other.gameObject.GetComponent<BlockDamage>();
 
             if (transform.position.y > (other.transform.position.y - collider2d.size.y + 0.1f) 
                 && transform.position.y < (other.transform.position.y + collider2d.size.y - 0.1f))
@@ -95,7 +96,13 @@ public class BallCollision : MonoBehaviour {
                 rigidbody2d.AddForce(force);
             }
 
-            Destroy(other.gameObject);
+            blockDamage.Damage(ballDamage);
         }
+    }
+
+    public void Launch(Vector2 direction)
+    {
+        force = direction * moveSpeed;
+        rigidbody2d.AddForce(force);
     }
 }

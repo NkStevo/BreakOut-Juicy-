@@ -9,8 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 422882}
   - 212: {fileID: 21203056}
-  - 114: {fileID: 11424110}
   - 61: {fileID: 6115468}
+  - 114: {fileID: 11424110}
+  - 114: {fileID: 11451620}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Player
@@ -56,6 +57,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
+--- !u!114 &11451620
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07227d5ba36b9304e94ade0d7925266f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 125934, guid: 88b020788e307d04c934e91d42a273c3, type: 2}
 --- !u!212 &21203056
 SpriteRenderer:
   m_ObjectHideFlags: 1

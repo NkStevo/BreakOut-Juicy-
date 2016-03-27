@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-    private int level = 1;
     private int score = 0;
+    public int level = 1;
 
     public static GameManager instance;
 

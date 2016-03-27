@@ -2,24 +2,32 @@
 using System.Collections;
 
 public class BallCollision : MonoBehaviour {
-    private static int ballNum = 0;
     private Rigidbody2D rigidbody2d;
     private BoxCollider2D collider2d;
     private Vector2 force;
     private BlockDamage blockDamage;
+    private LevelManager level;
 
+    public GameObject levelManager;
     public float moveSpeed = 500f;
     public int ballDamage = 2;
 
 	// Use this for initialization
 	void Start () {
-        ballNum++;
-        rigidbody2d = GetComponent<Rigidbody2D>();    
-	}
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        levelManager = GameObject.FindGameObjectWithTag("LevelManager");
+        level = levelManager.GetComponent<LevelManager>();
+        level.BallGained();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        if (level.levelOver == true)
+        {
+            rigidbody2d.velocity = Vector2.zero;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -35,11 +43,23 @@ public class BallCollision : MonoBehaviour {
             if (frac < 0)
             {
                 angle = -(1f + frac) * 90;
+
+                if (angle > -20)
+                {
+                    angle = -30;
+                }
+
                 rigidbody2d.AddForce(-force);
                 force = new Vector2(-Mathf.Cos(angle * (Mathf.PI / 180)), Mathf.Abs(Mathf.Sin(angle * (Mathf.PI / 180)))) * moveSpeed;
             } else
             {
                 angle = (1f - frac) * 90;
+
+                if (angle < 20)
+                {
+                    angle = -30;
+                }
+
                 rigidbody2d.AddForce(-force);
                 force = new Vector2(Mathf.Abs(Mathf.Cos(angle * (Mathf.PI / 180))), Mathf.Abs(Mathf.Sin(angle * (Mathf.PI / 180)))) * moveSpeed;
             }
@@ -50,9 +70,10 @@ public class BallCollision : MonoBehaviour {
             
             if ((force / moveSpeed).Equals(new Vector2(1f, 0f)) || (force / moveSpeed).Equals(new Vector2(-1f, 0f)))
             {
-                force = new Vector2((force.x / moveSpeed), 0.1f) * moveSpeed;
+                force = new Vector2((force.x / moveSpeed), 0.3f) * moveSpeed;
             }
 
+            level.AudioHit(2);
             rigidbody2d.AddForce(force);
 
             //Debug.Log(force / moveSpeed);
@@ -61,20 +82,25 @@ public class BallCollision : MonoBehaviour {
         if (other.gameObject.CompareTag("YBounds"))
         {
             rigidbody2d.AddForce(-force);
+
             force = new Vector2(-force.x, force.y);
+            level.AudioHit(2);
             rigidbody2d.AddForce(force);
         }
 
         if (other.gameObject.CompareTag("TopBound"))
         {
             rigidbody2d.AddForce(-force);
+
             force = new Vector2(force.x, -force.y);
+            level.AudioHit(2);
             rigidbody2d.AddForce(force);
         }
 
         if (other.gameObject.CompareTag("BottomBound"))
         {
-            ballNum--;
+            Debug.Log("Test");
+            level.BallLost();
             Destroy(gameObject);
         }
 
@@ -96,6 +122,7 @@ public class BallCollision : MonoBehaviour {
                 rigidbody2d.AddForce(force);
             }
 
+            level.AudioHit(1);
             blockDamage.Damage(ballDamage);
         }
     }

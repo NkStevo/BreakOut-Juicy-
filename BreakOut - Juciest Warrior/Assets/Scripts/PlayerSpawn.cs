@@ -8,6 +8,7 @@ public class PlayerSpawn : MonoBehaviour {
     private BallCollision ballCollision;
 
     public GameObject ball;
+    public GameObject newBall;
 
 	// Use this for initialization
 	void Start () {
@@ -18,9 +19,9 @@ public class PlayerSpawn : MonoBehaviour {
 	void Update () {
 	    if(Input.GetButtonDown("Launch") && launched == false)
         {
-            ballCollision = ball.GetComponent<BallCollision>();
+            ballCollision = newBall.GetComponent<BallCollision>();
             ballCollision.Launch(Vector2.up);
-            ball.transform.parent = null;
+            newBall.transform.parent = null;
             launched = true;
         }
 	}
@@ -30,9 +31,10 @@ public class PlayerSpawn : MonoBehaviour {
         launched = false;
         paddleCollider2d = GetComponent<BoxCollider2D>();
         ballCollider2d = ball.GetComponent<CircleCollider2D>();
-        ball = (GameObject)Instantiate(ball, new Vector3(transform.position.x,
-            (transform.position.y + paddleCollider2d.size.y + ballCollider2d.radius),
+        Debug.Log(transform.position);
+        newBall = (GameObject)Instantiate(ball, new Vector3(transform.position.x,
+            (transform.position.y + paddleCollider2d.size.y + ballCollider2d.radius + 0.07f),
             transform.position.z), transform.rotation);
-        ball.transform.parent = transform;
+        newBall.transform.parent = transform;
     }
 }

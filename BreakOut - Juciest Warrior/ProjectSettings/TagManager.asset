@@ -9,6 +9,7 @@ TagManager:
   - BottomBound
   - YBounds
   - Block
+  - LevelManager
   layers:
   - Default
   - TransparentFX
@@ -43,6 +44,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4095929061
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

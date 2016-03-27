@@ -23,11 +23,6 @@ public class BallCollision : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.rotation = Quaternion.Euler(0, 0, 0);
-
-        if (level.levelOver == true)
-        {
-            rigidbody2d.velocity = Vector2.zero;
-        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -99,7 +94,8 @@ public class BallCollision : MonoBehaviour {
 
         if (other.gameObject.CompareTag("BottomBound"))
         {
-            Debug.Log("Test");
+            level.gameStatus.text = "Damn!";
+            level.AddScore(-20);
             level.BallLost();
             Destroy(gameObject);
         }
@@ -122,6 +118,8 @@ public class BallCollision : MonoBehaviour {
                 rigidbody2d.AddForce(force);
             }
 
+            level.gameStatus.text = "Nice!";
+            level.AddScore(10);
             level.AudioHit(1);
             blockDamage.Damage(ballDamage);
         }

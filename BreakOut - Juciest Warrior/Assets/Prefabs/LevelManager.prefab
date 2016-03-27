@@ -190,6 +190,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStatus: {fileID: 0}
+  lifeText: {fileID: 0}
+  scoreText: {fileID: 0}
+  timerText: {fileID: 0}
   lives: 3
   blockNum: 0
   levelOver: 0
@@ -198,6 +201,7 @@ MonoBehaviour:
   victory: {fileID: 8300000, guid: f453ded18e7c202418fc9a2bd4404125, type: 3}
   hit1: {fileID: 8300000, guid: 1670d76052c7cef4d8f8843b05806487, type: 3}
   hit2: {fileID: 8300000, guid: d35a5a2d4a7290840b8f349fc3798d94, type: 3}
+  uiManager: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
